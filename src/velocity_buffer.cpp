@@ -10,6 +10,27 @@ velocity_buffer::~velocity_buffer()
 
 }
 
+boost::optional<geometry_msgs::Vector3Stamped> velocity_buffer::query_newest_data()
+{
+    std::lock_guard<std::mutex> lock(mtx_);
+    ros::Time start_time = ros::Time::now() - ros::Duration(buffer_length_);
+    std::vector<geometry_msgs::Vector3Stamped> new_buf_;
+    for(auto itr = buf_.begin(); itr != buf_.end(); itr++)
+    {
+        if(itr->header.stamp > start_time)
+        {
+            new_buf_.push_back(*itr);
+        }
+    }
+    buf_ = new_buf_;
+    if(buf_.size() == 0)
+    {
+        ROS_WARN_STREAM("no data in the velocity buffer.");
+        return boost::none;
+    }
+    return buf_[buf_.size()-1];
+}
+
 boost::optional<geometry_msgs::Vector3Stamped> velocity_buffer::query_data(ros::Time target_time)
 {
     std::lock_guard<std::mutex> lock(mtx_);

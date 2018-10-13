@@ -4,4 +4,4 @@ gps_frame : gps
 lidar_frame : lidar_frame
 map_frame : map
 
-buffer_length : 300.0
+buffer_length : 10.0

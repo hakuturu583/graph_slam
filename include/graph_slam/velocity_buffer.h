@@ -18,6 +18,7 @@ public:
     velocity_buffer(double buffer_length);
     ~velocity_buffer();
     void add_data(geometry_msgs::Vector3Stamped data);
+    boost::optional<geometry_msgs::Vector3Stamped> query_newest_data();
     boost::optional<geometry_msgs::Vector3Stamped> query_data(ros::Time target_time);
 private:
     std::mutex mtx_;

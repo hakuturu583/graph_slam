@@ -1,0 +1,8 @@
+#ifndef POINTCLOUD_BUFFER_H_INCLUDED
+#define POINTCLOUD_BUFFER_H_INCLUDED
+
+class pointcloud_buffer
+{
+
+};
+#endif  //POINTCLOUD_BUFFER_H_INCLUDED
