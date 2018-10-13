@@ -30,7 +30,6 @@ private:
     std::string pointcloud_topic_name_;
     ros::Subscriber nmea_sub_;
     std::string nmea_topic_;
-    bool use_gps_;
     ros::Subscriber imu_sub_;
     std::string imu_topic_;
     tf2_ros::Buffer tf_buffer_;
