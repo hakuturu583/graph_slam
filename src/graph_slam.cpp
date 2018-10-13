@@ -7,10 +7,12 @@ graph_slam::graph_slam() : tf_listener_(tf_buffer_)
     nh_.param<std::string>(ros::this_node::getName()+"/gps_frame", gps_frame_, "gps");
     nh_.param<std::string>(ros::this_node::getName()+"/lidar_frame", lidar_frame_, "velodyne");
     nh_.param<std::string>(ros::this_node::getName()+"/map_frame", map_frame_, "map");
+    nh_.param<double>(ros::this_node::getName()+"/buffer_length", buffer_length_, 100);
     pointcloud_sub_ = nh_.subscribe(ros::this_node::getName()+"/pointcloud",10, &graph_slam::pointcloud_callback_, this);
     imu_sub_ = nh_.subscribe(ros::this_node::getName()+"/imu",10, &graph_slam::imu_callback_, this);
     nmea_sub_ = nh_.subscribe(ros::this_node::getName()+"/nmea_sentence",10, &graph_slam::nmea_callback_, this);
     nmea_analyzer_ptr_ = std::make_shared<nmea_analyzer>(map_frame_);
+    velocity_estimator_ptr_ = std::make_shared<velocity_estimator>(buffer_length_);
 }
 
 graph_slam::~graph_slam()

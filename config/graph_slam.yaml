@@ -3,3 +3,5 @@ imu_frame : imu
 gps_frame : gps
 lidar_frame : lidar_frame
 map_frame : map
+
+buffer_length : 300.0

@@ -3,6 +3,7 @@
 
 //headers in this package
 #include <graph_slam/nmea_analyzer.h>
+#include <graph_slam/velocity_estimator.h>
 
 //headers in ROS
 #include <ros/ros.h>
@@ -43,6 +44,8 @@ private:
     void nmea_callback_(const nmea_msgs::Sentence::ConstPtr msg);
     void pointcloud_callback_(const sensor_msgs::PointCloud2::ConstPtr msg);
     std::shared_ptr<nmea_analyzer> nmea_analyzer_ptr_;
+    double buffer_length_;
+    std::shared_ptr<velocity_estimator> velocity_estimator_ptr_;
 };
 
 #endif  //GRAPH_SLAM_H_INCLUDED
