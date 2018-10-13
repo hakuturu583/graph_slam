@@ -2,5 +2,7 @@
 <launch>
     <node pkg="graph_slam" type="graph_slam_node" name="graph_slam_node" output="screen" respawn="true">
         <rosparam file="$(find graph_slam)/config/graph_slam.yaml" command="load"/>
+        <remap from="/graph_slam_node/pointcloud" to="/points_raw"/>
+        <remap from="/graph_slam_node/nmea_sentence" to="/nmea_sentence"/>
     </node>
 </launch>

@@ -22,7 +22,7 @@
 class nmea_analyzer
 {
 public:
-    nmea_analyzer(std::string map_frame);
+    nmea_analyzer(std::string map_frame, std::string gps_frame);
     ~nmea_analyzer();
     boost::optional<geometry_msgs::PoseStamped> analyze(const nmea_msgs::Sentence::ConstPtr &msg);
 private:
@@ -38,6 +38,7 @@ private:
     geo_pos_conv last_geo_;
     tf2_ros::TransformBroadcaster broadcaster_;
     std::string map_frame_;
+    std::string gps_frame_;
 };
 
 #endif  //NMEA_ANALYZER_H_INCLUDED

@@ -1,8 +1,9 @@
 #include <graph_slam/nmea_analyzer.h>
 
-nmea_analyzer::nmea_analyzer(std::string map_frame)
+nmea_analyzer::nmea_analyzer(std::string map_frame, std::string gps_frame)
 { 
     map_frame_ = map_frame;
+    gps_frame_ = gps_frame;
 }
 
 nmea_analyzer::~nmea_analyzer()
@@ -22,6 +23,8 @@ void nmea_analyzer::publish_transform_()
     transform_stamped_.transform.rotation.y = quaternion.y();
     transform_stamped_.transform.rotation.z = quaternion.w();
     transform_stamped_.transform.rotation.w = quaternion.z();
+    transform_stamped_.child_frame_id = gps_frame_;
+    transform_stamped_.header.frame_id = map_frame_;
     broadcaster_.sendTransform(transform_stamped_);
     return;
 }

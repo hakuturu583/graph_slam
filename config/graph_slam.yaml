@@ -1,7 +1,8 @@
 robot_frmae : base_link
 imu_frame : imu
 gps_frame : gps
-lidar_frame : lidar_frame
+lidar_frame : velodyne
 map_frame : map
+use_imu : false
 
 buffer_length : 10.0
