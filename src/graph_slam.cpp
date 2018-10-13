@@ -61,5 +61,6 @@ void graph_slam::imu_callback_(const sensor_msgs::Imu::ConstPtr msg)
 void graph_slam::nmea_callback_(const nmea_msgs::Sentence::ConstPtr msg)
 {
     std::lock_guard<std::mutex> lock(sensor_mutex_);
+    nmea_analyzer_ptr_->analyze(msg);
     return;
 }
