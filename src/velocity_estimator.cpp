@@ -29,8 +29,16 @@ void velocity_estimator::input_linear_acceralation_value(geometry_msgs::Vector3S
         buffer_.add_data(init_data);
     }
     else
-    {
-        
+    {   
+        boost::optional<geometry_msgs::Vector3Stamped> newest_data = buffer_.query_newest_data();
+        if(newest_data)
+        {
+            geometry_msgs::Vector3Stamped input_data = newest_data.get();
+            input_data.vector.x = input_data.vector.x + linear_acceralation.vector.x;
+            input_data.vector.y = input_data.vector.y + linear_acceralation.vector.y;
+            input_data.vector.z = input_data.vector.z + linear_acceralation.vector.z;
+            buffer_.add_data(input_data);
+        }
     }
     return;
 }
