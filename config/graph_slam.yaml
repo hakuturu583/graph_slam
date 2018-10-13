@@ -1,5 +1,6 @@
 robot_frmae : base_link
 imu_frame : imu
 gps_frame : gps
+use_gps : true
 lidar_frame : lidar_frame
 map_frame : map

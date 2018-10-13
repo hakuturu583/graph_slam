@@ -7,9 +7,13 @@ graph_slam::graph_slam() : tf_listener_(tf_buffer_)
     nh_.param<std::string>(ros::this_node::getName()+"/gps_frame", gps_frame_, "gps");
     nh_.param<std::string>(ros::this_node::getName()+"/lidar_frame", lidar_frame_, "velodyne");
     nh_.param<std::string>(ros::this_node::getName()+"/map_frame", map_frame_, "map");
+    nh_.param<bool>(ros::this_node::getName()+"/use_gps", use_gps_, true);
     pointcloud_sub_ = nh_.subscribe(ros::this_node::getName()+"/pointcloud",10, &graph_slam::pointcloud_callback_, this);
     imu_sub_ = nh_.subscribe(ros::this_node::getName()+"/imu",10, &graph_slam::imu_callback_, this);
-    nmea_sub_ = nh_.subscribe(ros::this_node::getName()+"/nmea_sentence",10, &graph_slam::nmea_callback_, this);
+    if(use_gps_)
+    {
+        nmea_sub_ = nh_.subscribe(ros::this_node::getName()+"/nmea_sentence",10, &graph_slam::nmea_callback_, this);
+    }
 }
 
 graph_slam::~graph_slam()
@@ -55,5 +59,6 @@ void graph_slam::imu_callback_(const sensor_msgs::Imu::ConstPtr msg)
 
 void graph_slam::nmea_callback_(const nmea_msgs::Sentence::ConstPtr msg)
 {
+    std::lock_guard<std::mutex> lock(sensor_mutex_);
     return;
 }
