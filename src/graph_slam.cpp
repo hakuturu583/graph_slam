@@ -10,10 +10,8 @@ graph_slam::graph_slam() : tf_listener_(tf_buffer_)
     nh_.param<bool>(ros::this_node::getName()+"/use_gps", use_gps_, true);
     pointcloud_sub_ = nh_.subscribe(ros::this_node::getName()+"/pointcloud",10, &graph_slam::pointcloud_callback_, this);
     imu_sub_ = nh_.subscribe(ros::this_node::getName()+"/imu",10, &graph_slam::imu_callback_, this);
-    if(use_gps_)
-    {
-        nmea_sub_ = nh_.subscribe(ros::this_node::getName()+"/nmea_sentence",10, &graph_slam::nmea_callback_, this);
-    }
+    nmea_sub_ = nh_.subscribe(ros::this_node::getName()+"/nmea_sentence",10, &graph_slam::nmea_callback_, this);
+    nmea_analyzer_ptr_ = std::make_shared<nmea_analyzer>(map_frame_);
 }
 
 graph_slam::~graph_slam()

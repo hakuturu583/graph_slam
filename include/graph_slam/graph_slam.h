@@ -1,6 +1,9 @@
 #ifndef GRAPH_SLAM_H_INCLUDED
 #define GRAPH_SLAM_H_INCLUDED
 
+//headers in this package
+#include <graph_slam/nmea_analyzer.h>
+
 //headers in ROS
 #include <ros/ros.h>
 #include <tf2_ros/transform_listener.h>
@@ -13,6 +16,7 @@
 
 //headers in STL
 #include <mutex>
+#include <memory>
 
 class graph_slam
 {
@@ -39,6 +43,7 @@ private:
     void imu_callback_(const sensor_msgs::Imu::ConstPtr msg);
     void nmea_callback_(const nmea_msgs::Sentence::ConstPtr msg);
     void pointcloud_callback_(const sensor_msgs::PointCloud2::ConstPtr msg);
+    std::shared_ptr<nmea_analyzer> nmea_analyzer_ptr_;
 };
 
 #endif  //GRAPH_SLAM_H_INCLUDED
