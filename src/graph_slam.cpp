@@ -24,7 +24,8 @@ void graph_slam::pointcloud_callback_(const sensor_msgs::PointCloud2::ConstPtr m
 {
     std::lock_guard<std::mutex> lock(sensor_mutex_);
     geometry_msgs::TransformStamped transform_stamped;
-    sensor_msgs::PointCloud2 pointcloud_transformed;
+    std::shared_ptr<sensor_msgs::PointCloud2> pointcloud_transformed_ptr = std::make_shared<sensor_msgs::PointCloud2>();
+    *pointcloud_transformed_ptr = *msg;
     try
     {
         transform_stamped = tf_buffer_.lookupTransform(lidar_frame_, robot_frmae_ , ros::Time(0));
@@ -34,6 +35,7 @@ void graph_slam::pointcloud_callback_(const sensor_msgs::PointCloud2::ConstPtr m
         ROS_WARN_STREAM("Could NOT transform " << lidar_frame_ << " to " << robot_frmae_ << " " << ex.what());
         return;
     }
+    tf2::doTransform(*pointcloud_transformed_ptr, *pointcloud_transformed_ptr, transform_stamped);
     return;
 }
 
