@@ -35,7 +35,7 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
-add_executable(graph_slam_node src/graph_slam_node.cpp src/graph_slam.cpp)
+add_executable(graph_slam_node src/graph_slam_node.cpp src/graph_slam.cpp src/nmea_analyzer.cpp src/geo_pos_conv.cpp)
 target_link_libraries(graph_slam_node ${catkin_LIBRARIES})
 
 install(TARGETS graph_slam_node
