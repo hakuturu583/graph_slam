@@ -35,7 +35,15 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
-add_executable(graph_slam_node src/graph_slam_node.cpp src/graph_slam.cpp src/nmea_analyzer.cpp src/geo_pos_conv.cpp)
+set(graph_slam_node_src
+  src/graph_slam_node.cpp 
+  src/graph_slam.cpp 
+  src/nmea_analyzer.cpp 
+  src/geo_pos_conv.cpp
+  src/velocity_estimator.cpp
+  src/velocity_buffer.cpp
+)
+add_executable(graph_slam_node ${graph_slam_node_src})
 target_link_libraries(graph_slam_node ${catkin_LIBRARIES})
 
 install(TARGETS graph_slam_node
