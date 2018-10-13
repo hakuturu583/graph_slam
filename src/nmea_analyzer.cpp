@@ -10,7 +10,24 @@ nmea_analyzer::~nmea_analyzer()
 
 }
 
-void nmea_analyzer::convert(std::vector<std::string> nmea, ros::Time current_stamp)
+std::vector<std::string> nmea_analyzer::split_(const std::string &string)
+{
+    std::vector<std::string> str_vec_ptr;
+    std::string token;
+    std::stringstream ss(string);
+    while (getline(ss, token, ','))
+        str_vec_ptr.push_back(token);
+    return str_vec_ptr;
+}
+
+void nmea_analyzer::analyze(const nmea_msgs::Sentence::ConstPtr &msg)
+{
+    current_time_ = msg->header.stamp;
+    convert_sentence_(split_(msg->sentence), msg->header.stamp);
+    return;
+}
+
+void nmea_analyzer::convert_sentence_(std::vector<std::string> nmea, ros::Time current_stamp)
 {
     try
     {
